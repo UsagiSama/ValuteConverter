@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="ValuteConverter.ValuteSelectionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ValuteConverter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<ScrollViewer>
+		<StackPanel>
+			<TextBlock x:Name="warn" Text="hoi" Visibility="Collapsed"/>
+			<ListView Name="dataList" SelectionMode="Single" IsItemClickEnabled="False" 
+					  SelectionChanged="DataList_SelectionChanged">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="0.70*"/>
+								<ColumnDefinition Width="0.30*"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="0" Text="{Binding Name}"/>
+							<TextBlock Grid.Column="1" Text="{Binding CharCode}"/>
+						</Grid>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+					</Style>
+				</ListView.ItemContainerStyle>
+
+				<ListView.Items>
+					<local:Valute/>
+				</ListView.Items>
+			</ListView>
+		</StackPanel>
+	</ScrollViewer>
+</Page>

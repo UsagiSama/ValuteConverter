@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="ValuteConverter.ConvertPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ValuteConverter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Grid x:Name="AppTitleBar" Background="Transparent">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="3*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.6*"/>
+			<RowDefinition Height="0.8*"/>
+			<RowDefinition Height="1.25*"/>
+			<RowDefinition Height="1.25*"/>
+			<RowDefinition Height="1.25*"/>
+			<RowDefinition Height="1.25*"/>
+			<RowDefinition Height="1.25*"/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="8*"/>
+		</Grid.RowDefinitions>
+
+		<TextBox Grid.Row="2" Grid.Column="1" Height="32" x:Name="TextBox" TextChanged="TextChanged" 
+				 HorizontalAlignment="Center" PlaceholderText="0"/>
+		<TextBlock Grid.Row="2" Grid.Column="3" Height="32" x:Name="TextBlock" HorizontalAlignment="Center"/>
+		<TextBlock Grid.Row="4" Grid.Column="1" Height="32" Text="{x:Bind fromValute}" HorizontalAlignment="Center"/>
+		<TextBlock Grid.Row="4" Grid.Column="3" Height="32" Text="{x:Bind toValute}" HorizontalAlignment="Center"/>
+		<Button Grid.Row="6" Grid.Column="1" Height="32" Content="Изменить валюту" Click="ClickButton1" HorizontalAlignment="Center"/>
+		<Button Grid.Row="6" Grid.Column="3" Height="32" Content="Изменить валюту" Click="ClickButton2" HorizontalAlignment="Center"/>
+		<Image Grid.Row="3" Grid.Column="2" Source="Assets/Arrow.png" Height="32"/>
+		<TextBlock Grid.Row="7" Grid.Column="2" x:Name="warn" Text="WARNING" Visibility="Collapsed"/>
+	</Grid>
+</Page>

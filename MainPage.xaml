@@ -1,0 +1,24 @@
+﻿<Page
+	x:Class="ValuteConverter.MainPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:ValuteConverter"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<Grid>
+		<RelativePanel>
+			<ProgressRing x:Name="progressRing" IsActive="True" Width="80" Height="80" 
+						  RelativePanel.AlignHorizontalCenterWithPanel="True"
+						  RelativePanel.AlignVerticalCenterWithPanel="True"/>
+			<TextBlock  x:Name="TextBlock" Text="Загрузка" RelativePanel.Below="progressRing" 
+					   RelativePanel.AlignHorizontalCenterWith="progressRing" Margin="10"/>
+		</RelativePanel>
+
+		<Button x:Name="NavigateButton" Content="Начать" Visibility="Collapsed"
+				Width="80" Height="32" HorizontalAlignment="Center"
+				VerticalAlignment="Center" Click="ClickNavigateButton"/>
+	</Grid>
+</Page>
