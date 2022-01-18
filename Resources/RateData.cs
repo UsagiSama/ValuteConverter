@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Linq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,49 +13,19 @@ namespace ValuteConverter
 	public class RateData
 	{
 		private ExchangeRate rate;
+		private Dictionary<string, Valute> sortedDict = new Dictionary<string, Valute>();
 
-		public string LoadRateData()
+		public Dictionary<string, Valute> SortedDict
 		{
-			string jsonData = LoadRateDataAsync().Result;
-
-			if (jsonData != "Ошибка подключения")
-			{
-				rate = JsonConvert.DeserializeObject<ExchangeRate>(jsonData);
-				return "Успешно";
-			}
-			else return jsonData;			
+			get { return sortedDict; }
 		}
 
-		private async Task<string> LoadRateDataAsync()
+		public bool LoadRateData()
 		{
 			string jsonData = "";
 
 			try
 			{
-				HttpWebRequest request = WebRequest.Create("https://www.cbr-xml-daily.ru/daily_json.js") as HttpWebRequest;
-				HttpWebResponse response = await request.GetResponseAsync().ConfigureAwait(false) as HttpWebResponse;
-
-				using (Stream stream = response.GetResponseStream()) 
-				{
-					using (StreamReader reader = new StreamReader(stream))
-					{
-						string line = "";
-
-						while ((line = reader.ReadLine()) != null)
-							jsonData += line;
-					}
-				}
-			}
-			catch (WebException) { return "Ошибка подключения"; } 
-
-			return jsonData;
-		}
-
-		/*public string LoadRateData()
-		{
-			try
-			{
-				string jsonData = "";
 				WebClient client = new WebClient();
 
 				using (Stream stream = client.OpenRead("https://www.cbr-xml-daily.ru/daily_json.js"))
@@ -69,11 +40,23 @@ namespace ValuteConverter
 				}
 
 				rate = JsonConvert.DeserializeObject<ExchangeRate>(jsonData);
-			}
-			catch (WebException) { return "Ошибка подключения"; }
+				
+				Valute rub = new Valute();
+				rub.Name = "Российский Рубль";
+				rub.CharCode = "RUB";
+				rub.Nominal = 1.0M;
+				rub.Value = 1.0M;
+				rate.Valute.Add("RUB", rub);
 
-			return "Успешно";
-		}*/
+				foreach (var pair in rate.Valute.OrderBy(pair => pair.Value.Name))
+				{
+					sortedDict.Add(pair.Key, pair.Value);
+				}
+			}
+			catch (WebException) { return true; }
+
+			return false;
+		}
 
 		public DateTime GetDateOfRate() => rate.Date;
 
@@ -100,7 +83,7 @@ namespace ValuteConverter
 			Valute fromValute = GetValute(fromKey);
 			Valute toValute = GetValute(toKey);
 
-			return value * toValute.Nominal * (fromValute.Value / toValute.Value);
+			return (value * fromValute.Value * toValute.Nominal) / (fromValute.Nominal * toValute.Value); 
 		}
 	}
 }

@@ -10,15 +10,19 @@
 
 	<Grid>
 		<RelativePanel>
-			<ProgressRing x:Name="progressRing" IsActive="True" Width="80" Height="80" 
+			<ProgressRing x:Name="progressRing" IsActive="False" Width="80" Height="80" 
 						  RelativePanel.AlignHorizontalCenterWithPanel="True"
 						  RelativePanel.AlignVerticalCenterWithPanel="True"/>
-			<TextBlock  x:Name="TextBlock" Text="Загрузка" RelativePanel.Below="progressRing" 
+			<TextBlock  x:Name="TextBlock" Text="Загрузка" Visibility="Collapsed" RelativePanel.Below="progressRing" 
 					   RelativePanel.AlignHorizontalCenterWith="progressRing" Margin="10"/>
 		</RelativePanel>
 
-		<Button x:Name="NavigateButton" Content="Начать" Visibility="Collapsed"
+		<Button x:Name="NavigateButton" Content="Начать" Visibility="Visible"
 				Width="80" Height="32" HorizontalAlignment="Center"
-				VerticalAlignment="Center" Click="ClickNavigateButton"/>
+				VerticalAlignment="Center" Click="ClickStartButton"/>
+
+		<Button x:Name="RetryButton" Content="Попытатся снова" Visibility="Collapsed"
+				Width="140" Height="32" HorizontalAlignment="Center"
+				VerticalAlignment="Center" Click="ClickRetryButton"/>
 	</Grid>
 </Page>

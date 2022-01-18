@@ -10,9 +10,8 @@
 
 	<ScrollViewer>
 		<StackPanel>
-			<TextBlock x:Name="warn" Text="hoi" Visibility="Collapsed"/>
 			<ListView Name="dataList" SelectionMode="Single" IsItemClickEnabled="False" 
-					  SelectionChanged="DataList_SelectionChanged">
+					  SelectionChanged="DataListSelectionChanged">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<Grid>

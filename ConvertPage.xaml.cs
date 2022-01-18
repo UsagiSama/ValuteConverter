@@ -12,21 +12,22 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Core;
 
 namespace ValuteConverter
 {
 	public sealed partial class ConvertPage : Page
 	{
 		private InterPageInfo info;
-		private string fromValute;
-		private string toValute;
+		private string leftValute;
+		private string rightValute;
+		private decimal leftValue;
+		private decimal rightValue;
 
 		public ConvertPage()
 		{
 			this.InitializeComponent();
 			info = new InterPageInfo();
-			fromValute = toValute = "AUD";
-			TextBlock.Text = "0";			
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -35,45 +36,84 @@ namespace ValuteConverter
 
 			if (history.SourcePageType.Name == "MainPage")
 			{
+				leftValute = rightValute = "AUD";
+				leftValue = rightValue = 0;
 				info.Rates = e?.Parameter as RateData;
 			}
 			else if (history.SourcePageType.Name == "ValuteSelectionPage")
 			{
 				info = e?.Parameter as InterPageInfo;
+				leftValute = info.LeftValute;
+				rightValute = info.RightValute;
+				leftValue = info.LeftValue;
+				rightValue = info.RightValue;
 
-				if (info.FromOrTo) toValute = info.CodeValute;
-				else fromValute = info.CodeValute;
+				if (info.LeftOrRight)
+				{
+					RightTextBox.Text = string.Format("{0:F2}", info.Rates.ConvertValute(leftValue, leftValute, rightValute));
+					LeftTextBox.Text = string.Format("{0:F2}", leftValue);
+				}
+				else 
+				{
+					RightTextBox.Text = string.Format("{0:F2}", rightValue);
+					LeftTextBox.Text = string.Format("{0:F2}", info.Rates.ConvertValute(rightValue, leftValute, rightValute));
+				}
+
+				//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 			}
 		}
 
-		private void ClickButton1(object sender, RoutedEventArgs e)
+		private void RightButtonClick(object sender, RoutedEventArgs e)
 		{
-			info.FromOrTo = false; 
-			info.CodeValute = fromValute;
+			ClickButtonHelper(false);
 			Frame.Navigate(typeof(ValuteSelectionPage), info);
 		}
 
-		private void ClickButton2(object sender, RoutedEventArgs e)
+		private void LeftButtonClick(object sender, RoutedEventArgs e)
 		{
-			info.FromOrTo = true;
-			info.CodeValute = toValute;
+			ClickButtonHelper(true);
 			Frame.Navigate(typeof(ValuteSelectionPage), info);
 		}
 
-		private void TextChanged(object sender, TextChangedEventArgs e)
+		private void ClickButtonHelper(bool leftOrRight)
 		{
-			if (TextBox.Text == "")
-				TextBlock.Text = "0";
+			info.LeftOrRight = leftOrRight;
+			info.LeftValute = leftValute;
+			info.RightValute = rightValute;
+			info.LeftValue = leftValue;
+			info.RightValue = rightValue;
+		}
 
+		private void RightTextChanged(object sender, TextChangedEventArgs e)
+		{
 			try 
 			{
-				decimal result = info.Rates.ConvertValute(Convert.ToDecimal(TextBox.Text), fromValute, toValute);
-				TextBlock.Text = string.Format("{0:F2}", result);
+				leftValue = info.Rates.ConvertValute(Convert.ToDecimal(RightTextBox.Text), leftValute, rightValute);
+				LeftTextBox.TextChanged -= LeftTextChanged;
+				LeftTextBox.Text = string.Format("{0:F2}", leftValue);
+				LeftTextBox.TextChanged += LeftTextChanged;
 			}
-			catch (FormatException)
+			catch (FormatException) { TextChangedHelper(); }
+		}
+
+		private void LeftTextChanged(object sender, TextChangedEventArgs e)
+		{
+			try
 			{
-				TextBox.Text = "";
+				rightValue = info.Rates.ConvertValute(Convert.ToDecimal(LeftTextBox.Text), rightValute, leftValute);
+				RightTextBox.TextChanged -= RightTextChanged;
+				RightTextBox.Text = string.Format("{0:F2}", rightValue);
+				RightTextBox.TextChanged += RightTextChanged;
 			}
+			catch (FormatException) { TextChangedHelper(); }
+		}
+
+		private void TextChangedHelper()
+		{
+			rightValue = 0;
+			leftValue = 0;
+			LeftTextBox.Text = "";
+			RightTextBox.Text = "";
 		}
 	}
 }

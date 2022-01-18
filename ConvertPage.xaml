@@ -28,14 +28,14 @@
 			<RowDefinition Height="8*"/>
 		</Grid.RowDefinitions>
 
-		<TextBox Grid.Row="2" Grid.Column="1" Height="32" x:Name="TextBox" TextChanged="TextChanged" 
+		<TextBox Grid.Row="2" Grid.Column="1" Height="32" x:Name="RightTextBox" TextChanged="RightTextChanged" 
 				 HorizontalAlignment="Center" PlaceholderText="0"/>
-		<TextBlock Grid.Row="2" Grid.Column="3" Height="32" x:Name="TextBlock" HorizontalAlignment="Center"/>
-		<TextBlock Grid.Row="4" Grid.Column="1" Height="32" Text="{x:Bind fromValute}" HorizontalAlignment="Center"/>
-		<TextBlock Grid.Row="4" Grid.Column="3" Height="32" Text="{x:Bind toValute}" HorizontalAlignment="Center"/>
-		<Button Grid.Row="6" Grid.Column="1" Height="32" Content="Изменить валюту" Click="ClickButton1" HorizontalAlignment="Center"/>
-		<Button Grid.Row="6" Grid.Column="3" Height="32" Content="Изменить валюту" Click="ClickButton2" HorizontalAlignment="Center"/>
-		<Image Grid.Row="3" Grid.Column="2" Source="Assets/Arrow.png" Height="32"/>
-		<TextBlock Grid.Row="7" Grid.Column="2" x:Name="warn" Text="WARNING" Visibility="Collapsed"/>
+		<TextBox Grid.Row="2" Grid.Column="3" Height="32" x:Name="LeftTextBox" TextChanged="LeftTextChanged"
+				 HorizontalAlignment="Center" PlaceholderText="0"/>
+		<TextBlock Grid.Row="4" Grid.Column="1" Height="32" Text="{x:Bind leftValute}" HorizontalAlignment="Center"/>
+		<TextBlock Grid.Row="4" Grid.Column="3" Height="32" Text="{x:Bind rightValute}" HorizontalAlignment="Center"/>
+		<Button Grid.Row="6" Grid.Column="1" Height="32" Content="Изменить валюту" Click="RightButtonClick" HorizontalAlignment="Center"/>
+		<Button Grid.Row="6" Grid.Column="3" Height="32" Content="Изменить валюту" Click="LeftButtonClick" HorizontalAlignment="Center"/>
+		<Image Grid.Row="3" Grid.Column="2" Source="Assets/Arrow.png" Height="32" HorizontalAlignment="Center"/>
 	</Grid>
 </Page>

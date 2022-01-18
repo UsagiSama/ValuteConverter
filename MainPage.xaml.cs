@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Diagnostics;
 
 namespace ValuteConverter
@@ -20,20 +20,40 @@ namespace ValuteConverter
 	public sealed partial class MainPage : Page
 	{
 		private RateData rates;
+		//private bool tryAgain;
 
 		public MainPage()
 		{
 			this.InitializeComponent();
-			rates = new RateData();
-			TextBlock.Text = rates.LoadRateData();
-			progressRing.IsActive = false;
-			TextBlock.Visibility = Visibility.Collapsed;
-			NavigateButton.Visibility = Visibility.Visible;	
 		}
 
-		private void ClickNavigateButton(object sender, RoutedEventArgs e)
+		private void ClickStartButton(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(ConvertPage), rates);
+			//tryAgain = false;
+			progressRing.IsActive = true;
+			TextBlock.Visibility = Visibility.Visible;
+			NavigateButton.Visibility = Visibility.Collapsed;
+
+			rates = new RateData();
+			TryLoadData();
+		}
+
+		private void ClickRetryButton(object sender, RoutedEventArgs e)
+		{
+			//tryAgain = true;
+			progressRing.IsActive = true;
+			TryLoadData();
+		}
+
+		private void TryLoadData()
+		{
+			if (rates.LoadRateData())
+			{
+				TextBlock.Text = "Ошибка подключения\n";
+				progressRing.IsActive = false;
+				RetryButton.Visibility = Visibility.Visible;
+			}
+			else Frame.Navigate(typeof(ConvertPage), rates);
 		}
 	}
 }

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Core;
 
 namespace ValuteConverter
 {
@@ -27,15 +28,21 @@ namespace ValuteConverter
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			info = e?.Parameter as InterPageInfo;
-			dataList.ItemsSource = info?.Rates.GetValuteList().Values;
-			dataList.SelectedIndex = info.Rates.GetIndex(info.CodeValute);
+			//dataList.ItemsSource = info?.Rates.GetValuteList().Values;
+			dataList.ItemsSource = info.Rates.SortedDict.Values;
+
+			if (info.LeftOrRight) dataList.SelectedIndex = info.Rates.GetIndex(info.RightValute);
+			else dataList.SelectedIndex = info.Rates.GetIndex(info.LeftValute);
 			//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 		}
 
-		private void DataList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void DataListSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			Valute selectedValute = dataList.SelectedItem as Valute;
-			info.CodeValute = selectedValute.CharCode;
+
+			if (info.LeftOrRight) info.RightValute = selectedValute.CharCode;
+			else info.LeftValute = selectedValute.CharCode;
+
 			Frame.Navigate(typeof(ConvertPage), info);
 		}
 	}
