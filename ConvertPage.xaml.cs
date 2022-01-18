@@ -45,8 +45,8 @@ namespace ValuteConverter
 				info = e?.Parameter as InterPageInfo;
 				leftValute = info.LeftValute;
 				rightValute = info.RightValute;
-				leftValue = info.LeftValue;
-				rightValue = info.RightValue;
+				leftValue = 0;
+				rightValue = 0;
 
 				if (info.LeftOrRight)
 				{
@@ -80,8 +80,8 @@ namespace ValuteConverter
 			info.LeftOrRight = leftOrRight;
 			info.LeftValute = leftValute;
 			info.RightValute = rightValute;
-			info.LeftValue = leftValue;
-			info.RightValue = rightValue;
+			//info.LeftValue = leftValue;
+			//info.RightValue = rightValue;
 		}
 
 		private void RightTextChanged(object sender, TextChangedEventArgs e)

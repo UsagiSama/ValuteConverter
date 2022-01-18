@@ -64,7 +64,7 @@ namespace ValuteConverter
 
 		public int GetIndex(string key)
 		{
-			var keys = rate.Valute.Keys;
+			var keys = sortedDict.Keys;
 			int index = 0;
 
 			foreach (string i in keys)

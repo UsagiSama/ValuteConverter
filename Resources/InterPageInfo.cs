@@ -12,7 +12,7 @@ namespace ValuteConverter
 		public RateData Rates { get; set; }
 		public string LeftValute { get; set; }
 		public string RightValute { get; set; }
-		public decimal LeftValue { get; set; }
-		public decimal RightValue { get; set; }
+		//public decimal LeftValue { get; set; }
+		//public decimal RightValue { get; set; }
 	}
 }
