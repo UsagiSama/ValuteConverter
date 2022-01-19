@@ -20,7 +20,6 @@ namespace ValuteConverter
 	public sealed partial class MainPage : Page
 	{
 		private RateData rates;
-		//private bool tryAgain;
 
 		public MainPage()
 		{
@@ -29,7 +28,6 @@ namespace ValuteConverter
 
 		private void ClickStartButton(object sender, RoutedEventArgs e)
 		{
-			//tryAgain = false;
 			progressRing.IsActive = true;
 			TextBlock.Visibility = Visibility.Visible;
 			NavigateButton.Visibility = Visibility.Collapsed;
@@ -40,7 +38,6 @@ namespace ValuteConverter
 
 		private void ClickRetryButton(object sender, RoutedEventArgs e)
 		{
-			//tryAgain = true;
 			progressRing.IsActive = true;
 			TryLoadData();
 		}

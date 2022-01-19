@@ -58,8 +58,6 @@ namespace ValuteConverter
 					RightTextBox.Text = string.Format("{0:F2}", rightValue);
 					LeftTextBox.Text = string.Format("{0:F2}", info.Rates.ConvertValute(rightValue, leftValute, rightValute));
 				}
-
-				//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 			}
 		}
 
@@ -80,8 +78,6 @@ namespace ValuteConverter
 			info.LeftOrRight = leftOrRight;
 			info.LeftValute = leftValute;
 			info.RightValute = rightValute;
-			//info.LeftValue = leftValue;
-			//info.RightValue = rightValue;
 		}
 
 		private void RightTextChanged(object sender, TextChangedEventArgs e)

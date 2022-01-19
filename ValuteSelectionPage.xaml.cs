@@ -28,12 +28,10 @@ namespace ValuteConverter
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			info = e?.Parameter as InterPageInfo;
-			//dataList.ItemsSource = info?.Rates.GetValuteList().Values;
 			dataList.ItemsSource = info.Rates.SortedDict.Values;
 
 			if (info.LeftOrRight) dataList.SelectedIndex = info.Rates.GetIndex(info.RightValute);
 			else dataList.SelectedIndex = info.Rates.GetIndex(info.LeftValute);
-			//SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 		}
 
 		private void DataListSelectionChanged(object sender, SelectionChangedEventArgs e)
